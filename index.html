@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root" style="text-align: center;"></div>  
+  <script type="text/babel">
+let score=0;
+let wicket=0;
+let ballwise=[];
+let hit=0;
+let inputRef=React.createRef();
+// function addone(){
+//     createroot.render(<App/>);
+//      score+=1;
+// }
+
+   function scoreadd(num){
+    // if(wicket<10){
+    //     ballwise.push(num);
+    // score+=num;
+    hit=num;
+    createroot.render(<App/>);
+   // console.log(ballwise);
+    // }
+    // console.log(hit);
+   
+}
+   function wi(){
+//     if(wicket<=9){
+//    ballwise.push("w");
+//     wicket+=1;
+      hit="w";
+      createroot.render(<App/>);
+ //   console.log(ballwise);
+//}
+}
+const Scorebutton=()=>(
+    <div>
+    <button onClick={()=> scoreadd(0)}>0</button>
+    <button onClick={()=> scoreadd(1)}>1</button>
+    <button onClick={()=> scoreadd(2)}>2</button>
+    <button onClick={()=> scoreadd(3)}>3</button>
+    <button onClick={()=> scoreadd(4)}>4</button>
+    <button onClick={()=> scoreadd(5)}>5</button>
+    <button onClick={()=> scoreadd(6)}>6</button>
+    <button onClick={wi}>wicket</button>
+    </div>
+)
+const Result=()=>(
+    <div>
+    {ballwise.map((res,index)=>(
+       <>
+       {index%6===0? <br />:null} 
+      <span key={index}>{res===0?<strong>.</strong>:res}</span>  
+    </>))}
+    </div>
+)
+function handlevent(event){
+    event.preventDefault();
+    if(hit=="w"){
+        wicket+=1;
+
+    }else
+    score+=hit;
+    ballwise.unshift(
+        <span>{`${hit},${inputRef.current.value}`}</span>);
+
+        hit=0;
+        inputRef.current.value='';
+//     console.log(inputRef.current.value);
+// console.log(ballwise);
+    createroot.render(<App/>);
+}
+const Form=()=>(
+    <>
+    <form onSubmit={handlevent}>
+        <input value={hit} placeholder="Enter value" />
+        <input   ref={inputRef}  placeholder="Add a Comment"/>
+        <button>SUBMIT</button>
+        </form>
+    </>
+)
+
+const App =() => (
+   <>
+   <h1>SCORE KEEPER</h1>
+   <h2> SCORE : {score}/{wicket}</h2>
+   <Scorebutton/>
+   <br/>
+   <Form />
+   <hr/>
+   <div>
+   {ballwise.map((res,index)=>(
+    <p key={index}>{res}</p>
+   ))}
+   </div>
+   </>
+)
+
+const createroot =ReactDOM.createRoot(document.getElementById("root"));
+createroot.render(<App/>);
+
+</script>
+</body>
+</html>
